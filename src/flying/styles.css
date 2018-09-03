@@ -1,0 +1,84 @@
+:root {
+  --pale-purple: #a6a2dc;
+  --purple: #7473bd;
+  --dark-purple: #7473bd;
+  --pale-coral: #ffacac;
+  --coral: #ff7979;
+  --neon-purple: #9d8dff;
+  --dark-neon-purple: #4a49cb;
+  --navy: #2c3f6b;
+}
+
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.boid {
+  overflow: visible;
+}
+
+.boid .right-wing {
+  transform-origin: 120px 36px;
+}
+
+.boid .right-wing {
+  animation-name: right-flap;
+  animation-iteration-count: infinite;
+  animation-duration: 700ms;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+@keyframes right-flap {
+  from {
+    transform: rotate3d(2.5, -1, 0, 180deg);
+  }
+
+  to {
+    transform: rotate3d(2.5, -1, 0, 0deg);
+  }
+}
+
+.boid .left-wing {
+  transform-origin: 100px 45px;
+}
+
+.boid .left-wing {
+  animation-name: left-flap;
+  animation-iteration-count: infinite;
+  animation-duration: 700ms;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+@keyframes left-flap {
+  from {
+    transform: rotate3d(-1, 0.4, 0, 0deg);
+  }
+
+  to {
+    transform: rotate3d(-1, 0.4, 0, 180deg);
+  }
+}
+
+.boid {
+  animation-name: swoop;
+  animation-iteration-count: infinite;
+  animation-duration: 700ms;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+@keyframes swoop {
+  from {
+    transform: translate(0px, 5px) rotateZ(0deg);
+  }
+
+  to {
+    transform: translate(0px, -5px) rotateZ(2deg);
+  }
+}

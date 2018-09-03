@@ -1,0 +1,74 @@
+:root {
+  --pale-purple: #a6a2dc;
+  --purple: #7473bd;
+  --dark-purple: #7473bd;
+  --pale-coral: #ffacac;
+  --coral: #ff7979;
+  --neon-purple: #9d8dff;
+  --dark-neon-purple: #4a49cb;
+  --navy: #2c3f6b;
+}
+
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: darkgrey;
+  border-radius: 50%;
+}
+
+.circle-1 {
+  background: var(--coral);
+}
+.circle-2 {
+  background: var(--pale-purple);
+}
+.circle-3 {
+  background: var(--purple);
+}
+.circle-4 {
+  background: var(--dark-purple);
+}
+
+/* EDIT BELOW THIS LINE */
+
+.circle {
+  margin-top: 20px;
+  transform-origin: 50% calc(-20px);
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-duration: 1000ms;
+  animation-timing-function: ease-in-out;
+}
+
+.circle-1 {
+  animation-delay: 100ms;
+}
+.circle-2 {
+  animation-delay: 250ms;
+}
+.circle-3 {
+  animation-delay: 400ms;
+}
+.circle-4 {
+  animation-delay: 550ms;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

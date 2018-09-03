@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="208px" height="137px" viewBox="0 0 208 137" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo" fill-rule="nonzero">
+            <polygon id="left-wing" fill="#A6A2DC" points="143.3 26.1 39 0.4 42.9 65.9"></polygon>
+            <polygon id="body" fill="#565C98" points="0.6 82.7 9.1 136.8 207.463525 0.702853666"></polygon>
+            <polygon id="right-wing" fill="#7473BD" points="160.4 33 157.4 20.5 143.3 26.1 42.9 65.9 37.4 68.1 80.8 87.6 184.9 134.3"></polygon>
+        </g>
+    </g>
+</svg>
