@@ -5,9 +5,11 @@
   "author": "Daniel Ström <D@nielstrom.se>",
   "license": "MIT",
   "scripts": {
-    "start": "live-server src"
+    "dev": "live-server --port=3456 --no-browser src",
+    "deploy": "gh-pages -d src"
   },
   "dependencies": {
+    "gh-pages": "^1.2.0",
     "live-server": "^1.2.0"
   }
 }
