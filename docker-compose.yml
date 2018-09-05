@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  web:
+    image: node:alpine
+    command: /bin/sh -c 'yarn && yarn dev'
+    user: node
+    working_dir: /node
+    volumes:
+      - packages:/node/node_modules
+      - $PWD/.:/node
+    ports:
+      - 3456:3456
+
+volumes:
+  packages: {}
