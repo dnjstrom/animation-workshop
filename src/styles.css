@@ -1,0 +1,58 @@
+:root {
+  --pale-purple: #a6a2dc;
+  --purple: #7473bd;
+  --dark-purple: #7473bd;
+  --pale-coral: #ffacac;
+  --coral: #ff7979;
+  --neon-purple: #9d8dff;
+  --dark-neon-purple: #4a49cb;
+  --navy: #2c3f6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  color: var(--navy);
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+  margin: -15px;
+}
+
+.example {
+  margin: 15px;
+  font-size: 1.7rem;
+  padding: 40px 60px;
+  text-decoration: none;
+  text-transform: capitalize;
+  text-align: center;
+  text-align: center;
+
+  background: var(--purple);
+  border-radius: 10px;
+  font-weight: lighter;
+  text-transform: uppercase;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.example:hover,
+.example:focus {
+  background: var(--coral);
+  transform: scale(1.1);
+  outline: none;
+}
