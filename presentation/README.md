@@ -1,5 +1,7 @@
 # Presentation
 
+[Spectacle docs](https://github.com/FormidableLabs/spectacle)
+
 ## Resting page
 
 - "The illusion of life" - 12 principles of animation, playing in the bacground
