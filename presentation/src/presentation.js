@@ -1,21 +1,23 @@
 import React from "react"
-import { Deck } from "spectacle"
+import { Deck, MarkdownSlides } from "spectacle"
 import createTheme from "spectacle/lib/themes/default"
 import "normalize.css"
 
 import { colors, fonts } from "./globals"
 import Title from "./slides/title"
-import Generic from "./slides/generic"
+import AboutMe from "./slides/about-me"
 import "./fonts/index.css"
+import Agenda from "./slides/agenda"
 
 const theme = createTheme(colors, fonts)
 
 export default class Presentation extends React.Component {
   render() {
     return (
-      <Deck theme={theme}>
+      <Deck theme={theme} transition={["slide"]}>
         <Title />
-        <Generic />
+        <AboutMe />
+        <Agenda />
       </Deck>
     )
   }
