@@ -31,21 +31,38 @@ The overwhelming freedom at this point makes it difficult for the computer to au
 1. Avoid unecessary DOM modifications. Using a shadow DOM can help minimize the necessary changes.
 1. Prefer CSS Animations. Their updates are automatically run on a separate thread. Next up in preference should be the Web Animation API and lastly reserve animating in regular javascript as a last resort (if at all).
 1. Avoid blocking javascript. The typical example would be server requests or reading files from disk. Make sure to use callbacks or promises.
+1. Use `requestAnimationFrame` to limit frequent updates to a reasonable amount for the given device.
 
 ### Step 2: Styles
 
-With all dynamic updates calculated it's time to inspect our stylesheets to determine what styles should be applied to what elements.
+With all dynamic updates calculated it's time to inspect our stylesheets to determine what styles should be applied to what elements. This task is much more well defined than the Script stage which means the browser can be quite smart about how to optimize it. Still, there are things we can do to help it along.
+
+1. Minimize the number of rules. Many sites serve unnecessary big style sheets with styles that might not be releveant to the current page or used at all.
+1. Avoid universal rules. Rules that includes selectors that match a lot of elements, like `*`, `[type="url"]` or `div` has to be checked for each such element which can prove expensive.
+
+Preferably rules should be written so it is quick to determine if it _does not_ apply to an given element. Rules are matched right to left, so a rule like `div .button` is more performant than `.button div` since with the latter the `.button` parent has to be checked for all `div` elements, but in the former the `div` parent only has to be checked for `.button` class elements - of which there are likely far fewer.
 
 ### Step 3: Layout
 
+So far we've mostly sorted out what elements there are and their corresponding styles, but at this stage we are ready to start translating this list into a more visual representation. At this point we're ready to figure out what element goes where on the page. A lot of style properties can affect how an element is layed out in the page - `position`, `width`, `margin` and `display` are just some of these. Moreover, many of these also affect the layout of elements further down the page, such as increasing an element's height. This means that changes to these properties tend to be costly and should really be avoided whenever possible. Try instead to implement your motion using only Composite-level properties that are much more efficient (more on this later).
+
 ### Step 4: Paint
 
+Having determined where each element goes on the page the browser starts painting in the content of each block. This process is generally quite straight-forward but it's good to be aware that things with a blur will be a bit more demanding to paint. If you have part of the block changing more often then others it might also prove worthwhile to ensure only that specific part is repainted on each update. This can be achieved by promoting an element to its own layer. By specifying `will-change: transform` (or `transform: translateZ(0)` for older browsers) the element gets extracted onto a separate layer where it can be modified separately from the rest of the document. If you've ever worked with graphics software this should feel very familiar. Take note though that each layer incurrs a cost in terms of memory and computational overhead so make sure the extraction actually makes your animation more performant overall.
+
 ### Step 5: Composite
+
+The last step of the rendering process is to combine the different layers into a single view for the screen, optionally with some manipulation of the layers first. The operations available at this step are generally the most performant ones since they can be performed at blazing speeds on the GPU. These properties are `transform` and `opacity` but ensure the element is already on its own layer (using `will-change`). Counter-intuitively it's more performant to rotate an element in 3D than it is to increase it's margin. Again though, make sure the benefit of making another layer outweighs the cost.
+
+## Conclusions
+
+Try and keep updates as late in the pipeline as possible.
 
 Additional reading:
 
 1. https://www.nngroup.com/articles/animation-usability/
-2. https://developers.google.com/web/fundamentals/design-and-ux/animations/
-3. https://www.html5rocks.com/en/tutorials/speed/high-performance-animations/
-4. https://twitter.com/szynszyliszys/status/1037668518999846912
-5. https://developers.google.com/web/fundamentals/performance/rendering/
+1. https://developers.google.com/web/fundamentals/design-and-ux/animations/
+1. https://www.html5rocks.com/en/tutorials/speed/high-performance-animations/
+1. https://twitter.com/szynszyliszys/status/1037668518999846912
+1. https://developers.google.com/web/fundamentals/performance/rendering/
+1. http://perfectionkills.com/profiling-css-for-fun-and-profit-optimization-notes/
