@@ -16,13 +16,25 @@ So, grab your hot beverage of choice and prepare for a crash course of the rende
  ----------------------------------------------------
 ```
 
-Let's take a moment to appreciate just how fast computers are. Whether you are reading this on a computer or a phone it's screen is likely to refresh at a rate of 60 times per second - allowing each refresh a diminuitive ~16 milliseconds to calculate and perform its updates. Even at the break-neck speeds of modern computing it's still a pretty tiny needle to thread.
+Let's take a moment to appreciate just how fast computers are. Whether you are reading this on a computer or a phone it's screen is likely refreshing at a rate of 60 times per second - allowing each refresh a diminuitive ~16 milliseconds to calculate and perform its updates. Any longer than that and you end up with janky movement. Even at the break-neck speeds of modern computing it's still a pretty tiny needle to thread.
 
 As developers it's our job to help the computer minimize the effort involved in updating the screen, and this is much easier to do if you understand the steps involved.
 
 ### Step 1: Script
 
+The first thing that happens in each cycle is that any pending javascript is run. Anything really can happen at this point - elements can be added or removed from the DOM, styles or classes modified and element states can change (e.g. hover). Updates due to CSS Animations or transitions are also part of this stage.
+
+The overwhelming freedom at this point makes it difficult for the computer to automatically optimize the code, however, depending on the situation there are a lot of optimizations you can do as a developer:
+
+1. Avoid heavy computations. Maybe you can make sure the collection of posts are pre-sorted on the server.
+1. Offload heavy computations. Any long-running calculations that can't be avoided should be performed in a separate thread to avoid slowing down rendering.
+1. Avoid unecessary DOM modifications. Using a shadow DOM can help minimize the necessary changes.
+1. Prefer CSS Animations. Their updates are automatically run on a separate thread. Next up in preference should be the Web Animation API and lastly reserve animating in regular javascript as a last resort (if at all).
+1. Avoid blocking javascript. The typical example would be server requests or reading files from disk. Make sure to use callbacks or promises.
+
 ### Step 2: Styles
+
+With all dynamic updates calculated it's time to inspect our stylesheets to determine what styles should be applied to what elements.
 
 ### Step 3: Layout
 
@@ -36,3 +48,4 @@ Additional reading:
 2. https://developers.google.com/web/fundamentals/design-and-ux/animations/
 3. https://www.html5rocks.com/en/tutorials/speed/high-performance-animations/
 4. https://twitter.com/szynszyliszys/status/1037668518999846912
+5. https://developers.google.com/web/fundamentals/performance/rendering/
