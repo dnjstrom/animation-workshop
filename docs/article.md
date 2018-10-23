@@ -1,10 +1,12 @@
 # Web Animation and the Render Pipeline
 
-Being a student of both design and development it sort of makes sense that I would find the art of web animation so facinating. As a dicipline right on the border between the two, the freedom in shaping an intentful motion has to be tempered with knowledge of the browsers' abilities and limitations. The conflict can feel frustrating to negotiate at times but also provides an engaging puzzle where the end result is likely not what was imagined in the beginning but which has assumed a certain life of its own.
+Being a student of both design and development it sort of makes sense that I would find the art of web animation so facinating. As a dicipline right on the border between the two, the freedom in shaping an intentful motion has to be tempered with knowledge of the browsers' abilities and limitations. The conflict can feel frustrating to negotiate at times but also provides an engaging puzzle where the end result is likely not what was imagined in the beginning but has assumed a certain life of its own.
 
 Or, perhaps all of that is just a vain attempt to rationalize the simple joy of making things go "swooosh" on your screen.
 
-Whatever the case, animations are a lot of fun to work with and can, when designed and implemented with care, enhance the user experience significantly. While how to design useful animations is increadibly important, this article will rather focus on some technical considerations imposed by our medium. More specifically how web browsers render things to the screen and what this means for your animations.
+Whatever the case, animations are a lot of fun to work with and can, when designed and implemented with care, enhance the user experience significantly. All too often though developers either seem to shirk away from implementing animations because it's not clear how to do it well, or they might completely disregard any thought to performance.
+
+In this article, we'll explore the technical considerations imposed by our medium - the browser - in an attempt to demystify why some animations work better than others. More specifically how web browsers render things to the screen and what this means for your animations.
 
 So grab your hot beverage of choice, and prepare for a crash course of the rendering pipeline.
 
@@ -26,29 +28,29 @@ The first thing that happens in each cycle is that any pending javascript is run
 
 The overwhelming freedom at this point makes it difficult for the computer to automatically optimize the code, however, depending on the situation there are a lot of optimizations you can do as a developer:
 
-#### Avoid heavy computations
+###### Avoid heavy computations
 
 Maybe you can make sure the collection of posts are pre-sorted on the server.
 
-#### Offload heavy computations
+###### Offload heavy computations
 
 Any long-running calculations that can't be avoided should be performed in a separate thread to avoid slowing down rendering.
 
-#### Avoid unecessary DOM modifications
+###### Avoid unecessary DOM modifications
 
 Using a shadow DOM can help minimize the necessary changes.
 
-#### Prefer CSS Animations
+###### Prefer CSS Animations
 
-Their updates are automatically run on a separate thread. Next up in preference should be the Web Animation API and lastly reserve animating in regular javascript as a last resort (if at all).
+Their updates are automatically run on a separate thread. Next up in preference should be the Web Animation API and lastly reserve animating with regular javascript as a last resort (if at all).
 
-#### Avoid blocking javascript
+###### Avoid blocking javascript
 
-The typical example would be server requests or reading files from disk. Make sure to use callbacks or promises.
+The typical example would be when doing server requests or reading files from disk. Make sure to use callbacks or promises rather than synchronously executing functions.
 
-#### Use `requestAnimationFrame`
+###### Use `requestAnimationFrame`
 
-To limit frequent updates to a reasonable amount for the given device.
+To limit frequent updates to a reasonable rate for the given device.
 
 ### STEP 2: Styles
 
@@ -56,11 +58,15 @@ With all dynamic updates calculated it's time to inspect our stylesheets to dete
 
 #### Minimize the number of rules
 
-Many sites serve unnecessary big style sheets with styles that might not be releveant to the current page or used at all.
+Many sites serve unnecessarily big style sheets with styles that might not be releveant to the current page or used at all.
 
 #### Avoid universal rules
 
-Rules that includes selectors that match a lot of elements, like `*`, `[type="url"]` or `div` has to be checked for each such element which can prove expensive.
+Rules like `*` or `[type="url"]` has to be checked for all elements which can add up to a hefty performance cost.
+
+#### Use classes
+
+While a rule like `li:nth-child(odd)` has a certain elegance, from a performance standpoint it'd make more sense to just add a class `.odd-row` to all odd rows.
 
 Preferably rules should be written so it is quick to determine if it **does not** apply to an given element. Rules are matched right to left, so a rule like `div .button` is more performant than `.button div` since with the latter the `.button` parent has to be checked for all `div` elements, but in the former the `div` parent only has to be checked for `.button` class elements - of which there are likely far fewer.
 
@@ -78,17 +84,19 @@ The last step of the rendering process is to combine the different layers into a
 
 ## Conclusions
 
-As we've seen, each step in the pipeline has implications for what choices to make when animating and for each subsequent step. As a rule of thumb you should try and keep changes towards the end of the pipeline to avoid cascading updates. Armed with knowledge of how the browser renders things to the screen, working with web animations should feel more approachable and the guidelines above provide a framework for experimentation, where the end result is delightful in both aestethics and performance.
+As we've seen, each step in the pipeline has implications for what choices to make when animating but also necessitates updates in each subsequent step of the pipeline. As such it's generally better to try and keep changes towards the end of the pipeline in order to avoid cascading updates.
+
+Having more familiarity with the five steps of the render pipeline, my hope is that exploring web animations feels more approachable and joyful to you in the future. The guidelines above provide a framework for confident experimentation where ultimately the end result turns out delightful in both aestethics and performance.
 
 Finally, while this article doesn't really touch on tooling, anytime you're working with performance it's absolutely crucial to measure and validate the optimizations applied, and there's a bunch of tooling to help you. Check out the recommended reading for more on that and other brilliant resources.
 
 #### Recommended reading
 
-- The venerable Nielsen Norman Group has compiled a lot of information on how to use animation to support the user experience in this article on animation usability.
+- The venerable Nielsen Norman Group has compiled a lot of interesting data on how to use animation to support the user experience in this article on animation usability.
   - https://www.nngroup.com/articles/animation-usability/
 - Google has written an abundance of great articles on the topic of animation ranging from UX to performance and tooling.
   - https://developers.google.com/web/fundamentals/design-and-ux/animations/
   - https://www.html5rocks.com/en/tutorials/speed/high-performance-animations/
   - https://developers.google.com/web/fundamentals/performance/rendering/
-- Anna Migas amazing talk on animation performance at Nordic.js was the inspiration that got me personally engaged with the topic.
+- Anna Migas amazing talk on animation performance at Nordic.js was the main inspiration that got me writing this article.
   - https://twitter.com/szynszyliszys/status/1037668518999846912
