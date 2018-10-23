@@ -11,9 +11,9 @@ So grab your hot beverage of choice, and prepare for a crash course of the rende
 ## Render pipeline
 
 ```
--> Script -> Styles -> Layout -> Paint -> Composite -
-|                                                    |
- ----------------------------------------------------
+ -> Script -> Styles -> Layout -> Paint -> Composite -
+|                                                     |
+ -----------------------------------------------------
 ```
 
 Let's take a moment to appreciate just how fast computers are. Whether you are reading this on a computer or a phone it's screen is likely refreshing at a rate of 60 times per second - allowing each refresh a diminuitive ~16 milliseconds to calculate and perform its updates. Any longer than that and you end up with janky movement. Even at the break-neck speeds of modern computing it's still a pretty tiny needle to thread.
